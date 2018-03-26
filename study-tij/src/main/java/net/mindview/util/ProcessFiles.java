@@ -14,21 +14,25 @@ public class ProcessFiles {
   }
   public void start(String[] args) {
     try {
-      if(args.length == 0)
+      if(args.length == 0) {
         processDirectoryTree(new File("."));
-      else
-        for(String arg : args) {
+      }
+      else {
+        for (String arg : args) {
           File fileArg = new File(arg);
-          if(fileArg.isDirectory())
+          if (fileArg.isDirectory()) {
             processDirectoryTree(fileArg);
+          }
           else {
             // Allow user to leave off extension:
-            if(!arg.endsWith("." + ext))
+            if (!arg.endsWith("." + ext)) {
               arg += "." + ext;
+            }
             strategy.process(
-              new File(arg).getCanonicalFile());
+                    new File(arg).getCanonicalFile());
           }
         }
+      }
     } catch(IOException e) {
       throw new RuntimeException(e);
     }
@@ -36,8 +40,9 @@ public class ProcessFiles {
   public void
   processDirectoryTree(File root) throws IOException {
     for(File file : Directory.walk(
-        root.getAbsolutePath(), ".*\\." + ext))
+        root.getAbsolutePath(), ".*\\." + ext)) {
       strategy.process(file.getCanonicalFile());
+    }
   }
   // Demonstration of how to use it:
   public static void main(String[] args) {
